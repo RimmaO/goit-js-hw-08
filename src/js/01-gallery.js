@@ -26,7 +26,7 @@ function createGalleryMarkup(items) {
     .join('');
 }
 
-//* використовуємо бібліотеку SimpleLightbox (підключена через термінал npm install simplelightbox (package.json -> dep -> "simplelightbox": "^2.13.0"))
+//* використовуємо бібліотеку SimpleLightbox (підключена через термінал npm install simplelightbox (перевірка package.json -> dep -> "simplelightbox": "^2.13.0"))
 
 const lightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
