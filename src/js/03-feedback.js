@@ -2,6 +2,8 @@ import throttle from 'lodash.throttle';
 
 const LOCALSTORAGE_KEY = 'feedback-form-state';
 const formRef = document.querySelector('.feedback-form');
+const inputRef = document.querySelector('input');
+const textareaRef = document.querySelector('textarea');
 
 const formData = {};
 
@@ -19,6 +21,10 @@ function onFormInput(event) {
 //* відправка форми:очищаєм форму та очищаєм сховище
 function onFormSubmit(event) {
   event.preventDefault();
+  if (inputRef.value === '' || textareaRef.value === '') {
+    return alert('Please fill in all the fields');
+  }
+
   event.target.reset();
   localStorage.removeItem('LOCALSTORAGE_KEY');
   console.log(formData);
@@ -34,7 +40,6 @@ function statusOfStorage() {
     Object.entries(formDataSavedText).forEach(function ([name, value]) {
       formData[name] = value;
       formRef.elements[name].value = value;
-      //   console.log(formRef.elements);
     });
   }
 }
