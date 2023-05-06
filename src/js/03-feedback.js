@@ -12,7 +12,7 @@ statusOfStorage();
 formRef.addEventListener('input', throttle(onFormInput, 500));
 formRef.addEventListener('submit', onFormSubmit);
 
-//* отримуєм значення поля зберігаєм значення поля в сховище та добавляєм тротл
+//* отримуєм значення поля зберігаєм значення поля в сховище та добавляєм тротл - щоб сховище оновлювалось не частіше, ніж раз на 500 мілісекунд
 function onFormInput(event) {
   formData[event.target.name] = event.target.value;
   localStorage.setItem('LOCALSTORAGE_KEY', JSON.stringify(formData));
