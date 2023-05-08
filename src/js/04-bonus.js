@@ -2,9 +2,12 @@ import throttle from 'lodash.throttle';
 
 const LOCALSTORAGE_KEY = 'form-data';
 const formRef = document.querySelector('form');
-const inputsRef = document.querySelectorAll('input');
+
+const emailRef = document.querySelector('#email');
+const clearBtnRef = document.querySelector('#clear');
 
 const formData = {};
+
 statusOfStorage();
 // 1.Для збереження даних у localStorage використовуйте ключ "form-data".
 // 4.При надсиланні форми дані повинні бути збережені в localStorage.
@@ -16,6 +19,14 @@ function onFormInput(event) {
 formRef.addEventListener('input', throttle(onFormInput, 1000));
 
 // 2.Для валідації поля "Адреса електронної пошти" використовуйте регулярний вираз.
+const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+emailRef.addEventListener('blur', function () {
+  if (!emailRegex.test(emailRef.value)) {
+    emailRef.setCustomValidity('Please write valid email');
+  } else {
+    emailRef.setCustomValidity('');
+  }
+});
 
 // 3.При завантаженні сторінки, якщо дані є в localStorage, вони мають бути автоматично заповнені у форму.
 function statusOfStorage() {
@@ -24,17 +35,23 @@ function statusOfStorage() {
   );
 
   if (formDataSavedText) {
-    Object.entries(formDataSavedText).forEach(function ([name, value]) {
-      formData[name] = value;
-      formRef.elements[name].value = value;
-    });
+    formRef.firstName.value = formData.firstName;
+    formRef.lastName.value = formData.lastName;
+    formRef.email.value = formData.email;
+    formRef.phone.value = formData.phone;
   }
 }
+
 // 5.Додайте перевірку заповнення всіх полів форми перед збереженням в localStorage.
 // перевірка на заповненість ВСІХ полів відправка форми: очищаєм форму та очищаєм сховище
 function onFormSubmit(event) {
   event.preventDefaut();
-  if (!inputsRef.value) {
+  if (
+    !formRef.firstName.value ||
+    !formRef.lastName.value ||
+    !formRef.email.value ||
+    !formRef.phone.value
+  ) {
     return alert('Please fill all');
   }
   event.target.reset();
@@ -44,3 +61,8 @@ function onFormSubmit(event) {
 formRef.addEventListener('submit', onFormSubmit);
 
 // 6.Додайте функціональність очищення даних із localStorage при натисканні на кнопку "Очистити".
+
+clearBtnRef.addEventListener('click', function () {
+  localStorage.removeItem(LOCALSTORAGE_KEY);
+  formRef.reset();
+});
