@@ -14,7 +14,7 @@ statusOfStorage();
 // отримуєм значення поля та зберігаєм дані в localStorage та добавляєм тротл - щоб сховище оновлювалось не частіше, ніж раз на 1секунду
 function onFormInput(event) {
   formData[event.target.name] = event.target.value;
-  localStorage.setItem('LOCALSTORAGE_KEY', JSON.stringify(formData));
+  localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(formData));
 }
 formRef.addEventListener('input', throttle(onFormInput, 1000));
 
@@ -30,11 +30,10 @@ emailRef.addEventListener('blur', function () {
 
 // 3.При завантаженні сторінки, якщо дані є в localStorage, вони мають бути автоматично заповнені у форму.
 function statusOfStorage() {
-  const formDataSavedText = JSON.parse(
-    localStorage.getItem('LOCALSTORAGE_KEY')
-  );
+  const formDataSavedText = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
 
   if (formDataSavedText) {
+    formData = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
     formRef.firstName.value = formData.firstName;
     formRef.lastName.value = formData.lastName;
     formRef.email.value = formData.email;
@@ -55,7 +54,7 @@ function onFormSubmit(event) {
     return alert('Please fill all');
   }
   event.target.reset();
-  localStorage.removeItem('LOCALSTORAGE_KEY');
+  localStorage.removeItem(LOCALSTORAGE_KEY);
   console.log(formData);
 }
 formRef.addEventListener('submit', onFormSubmit);
