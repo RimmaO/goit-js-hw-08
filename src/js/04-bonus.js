@@ -33,7 +33,10 @@ function statusOfStorage() {
   const formDataSavedText = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
 
   if (formDataSavedText) {
-    formData = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
+    formData.firstName = formDataSavedText.firstName;
+    formData.lastName = formDataSavedText.lastName;
+    formData.email = formDataSavedText.email;
+    formData.phone = formDataSavedText.phone;
     formRef.firstName.value = formData.firstName;
     formRef.lastName.value = formData.lastName;
     formRef.email.value = formData.email;
@@ -43,6 +46,8 @@ function statusOfStorage() {
 
 // 5.Додайте перевірку заповнення всіх полів форми перед збереженням в localStorage.
 // перевірка на заповненість ВСІХ полів відправка форми: очищаєм форму та очищаєм сховище
+console.log(formRef.firstName);
+
 function onFormSubmit(event) {
   event.preventDefaut();
   if (
