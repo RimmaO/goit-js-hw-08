@@ -15,7 +15,7 @@ formRef.addEventListener('submit', onFormSubmit);
 //* отримуєм значення поля зберігаєм значення поля в сховище та добавляєм тротл - щоб сховище оновлювалось не частіше, ніж раз на 500 мілісекунд
 function onFormInput(event) {
   formData[event.target.name] = event.target.value;
-  localStorage.setItem('LOCALSTORAGE_KEY', JSON.stringify(formData));
+  localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(formData));
 }
 
 //* відправка форми:очищаєм форму та очищаєм сховище
@@ -26,15 +26,13 @@ function onFormSubmit(event) {
   }
 
   event.target.reset();
-  localStorage.removeItem('LOCALSTORAGE_KEY');
+  localStorage.removeItem(LOCALSTORAGE_KEY);
   console.log(formData);
 }
 
 //* відстежуєм значення в формі, якщо стор була перезавантажена, і якщо там щось було то збережемо в формі, якщо ні - null (Метод Object.entries(obj) повертає масив записів, кожен елемент якого, буде ще один масив з 2-х елементів: імені властивості і значення цієї властивості з об'єкта obj.)
 function statusOfStorage() {
-  const formDataSavedText = JSON.parse(
-    localStorage.getItem('LOCALSTORAGE_KEY')
-  );
+  const formDataSavedText = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
 
   if (formDataSavedText) {
     Object.entries(formDataSavedText).forEach(function ([name, value]) {

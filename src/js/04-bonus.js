@@ -46,7 +46,6 @@ function statusOfStorage() {
 
 // 5.Додайте перевірку заповнення всіх полів форми перед збереженням в localStorage.
 // перевірка на заповненість ВСІХ полів відправка форми: очищаєм форму та очищаєм сховище
-console.log(formRef.firstName);
 
 function onFormSubmit(event) {
   event.preventDefaut();
